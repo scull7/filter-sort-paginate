@@ -75,6 +75,26 @@ describe 'FSPMySQLQueryTranslator', ->
 
       translator.fields(fields).should.equal expected
 
+  describe 'from()', ->
+    it 'should be a function with an arity of 1', ->
+      FSPMySQLQueryTranslator.prototype.from.should.be.a 'function'
+      FSPMySQLQueryTranslator.prototype.from.length.should.equal 1
+
+    it 'should throw an FSPParameterError if the table parameter not a valid column name', ->
+      test  = (param) ->
+        return translator.from.bind(translator, param)
+
+      params  = [null, undefined, 123, { field: 'test' }, '-boo', /something/]
+
+      params.forEach (param) ->
+        expect(test(param)).to.throw FSPParameterError
+        expect(test(param)).to.throw(
+          /FSPMySQLTranslator::from\(\): table parameter is not valid:/
+        )
+
+    it 'should return a properly formatted FROM clause', ->
+      translator.from('test').should.equal ' FROM `test`'
+
   describe 'filters()', ->
 
     it 'should be a function with an arity of 1', ->
