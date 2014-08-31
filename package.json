@@ -33,5 +33,9 @@
     "mocha": "^1.21.4",
     "sinon": "^1.10.3",
     "sinon-chai": "^2.5.0"
+  },
+  "dependencies": {
+    "bluebird": "^2.3.2",
+    "mysql": "^2.4.3"
   }
 }

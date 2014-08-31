@@ -37,7 +37,7 @@ function FSPMiddleware(req, res, next) {
 
   transport         = FSPRequest(req, transport);
 
-  this.driver(transport, function (err, response) {
+  this.driver(req.mysql, transport, function (err, response) {
     if (err) return next(err);
 
     return res.json(response);
