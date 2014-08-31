@@ -1,0 +1,6 @@
+--ui bdd
+--compilers coffee:coffee-script/register
+--growl
+--recursive
+--require test/handlers.js
+--require test/common
