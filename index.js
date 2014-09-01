@@ -32,16 +32,18 @@ function FSPFactory(repository, fields, options) {
   this.driver       = drivers[options.driver];
 
   return FSPMiddleware.bind(this);
-};
+}
 
 function FSPMiddleware(req, res, next) {
   var transport     = new FSPTransport(this.repository);
   transport.fields  = this.fields;
 
-  transport         = FSPRequest(req, transport);
+  transport         = new FSPRequest(req, transport);
 
   this.driver(req, transport, function (err, response) {
-    if (err) return next(err);
+    if (err) {
+      return next(err);
+    }
 
     return res.json(response);
   });
