@@ -61,3 +61,50 @@ describe 'FSPField', ->
       expect(test[1].alias).to.be.null
       test[2].name.should.equal 'has_alias'
       test[2].alias.should.equal 'this'
+
+    it 'should throw an exception when an invalid field is given', ->
+      fields = [
+        { name: 'test', alias: 'my_test' }
+        'something'
+        [ 'bad' ]
+      ]
+      test  = () -> return FSPField.getManyFromArray(fields)
+      expect(test).to.throw FSPParameterError
+      expect(test).to.throw /Invalid field specified/
+
+    it 'should parse a mixed array of fields', ->
+      fields = [
+        { name: 'test', alias: 'my_test' }
+        { name: 'no_alias' }
+        'array_item'
+        { name: 'has_alias', alias: 'this' }
+      ]
+      test  = FSPField.getManyFromArray(fields)
+
+      test.forEach (field) -> field.should.be.an.instanceOf FSPField
+
+      test[0].name.should.equal 'test'
+      test[0].alias.should.equal 'my_test'
+      test[1].name.should.equal 'no_alias'
+      expect(test[1].alias).to.be.null
+      test[2].name.should.equal 'array_item'
+      expect(test[2].alias).to.be.null
+      test[3].name.should.equal 'has_alias'
+      test[3].alias.should.equal 'this'
+
+    it 'should parse an array of strings', ->
+      fields = [
+        'test'
+        'no_alias'
+        'array_item'
+      ]
+      test  = FSPField.getManyFromArray(fields)
+
+      test.forEach (field) -> field.should.be.an.instanceOf FSPField
+
+      test[0].name.should.equal 'test'
+      expect(test[0].alias).to.be.null
+      test[1].name.should.equal 'no_alias'
+      expect(test[1].alias).to.be.null
+      test[2].name.should.equal 'array_item'
+      expect(test[2].alias).to.be.null

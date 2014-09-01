@@ -47,12 +47,15 @@ function FSPMiddleware(req, res, next) {
   });
 }
 
-function use(driver) {
-  if(!driver.name) {
-    throw new FSPParameterError("FSP::use", "You must specify a driver name");
+function addDriver(name, driver) {
+  if(!name) {
+    throw new FSPParameterError("FSP::addDriver", "You must specify a driver name");
   }
-  drivers[driver.name]  = driver;
+  if (typeof driver !== 'function') {
+    throw new FSPParameterError("FSP::addDriver", "Driver must be a function");
+  }
+  drivers[name]  = driver;
 }
-FSPFactory.use  = use;
+FSPFactory.addDriver  = addDriver;
 
 module.exports  = FSPFactory;
