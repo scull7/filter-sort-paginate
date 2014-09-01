@@ -4,12 +4,16 @@ FSPMySQL      = requireTarget '/lib/driver/mysql/'
 
 describe 'FSPMySQL', ->
   transport       = null
+  mockReq         = null
   mockConnection  = null
 
   beforeEach ->
     mockConnection  =
       escape: mysql.escape.bind(mysql)
       escapeId: mysql.escapeId.bind(mysql)
+
+    mockReq         =
+      mysql: mockConnection
 
     transport       = new FSPTransport 'test'
 
@@ -28,7 +32,7 @@ describe 'FSPMySQL', ->
       else
         throw Error("Bad SQL: #{sql}")
 
-    FSPMySQL mockConnection, transport, (err, results) ->
+    FSPMySQL mockReq, transport, (err, results) ->
       expect(err).to.be.null
       results.items.should.eql [{ test: 'something' }]
       results.field_data.should.eql [{ name: 'test' }]
@@ -46,6 +50,6 @@ describe 'FSPMySQL', ->
       else
         throw Error("Bad SQL: #{sql}")
 
-    FSPMySQL mockConnection, transport, (err, results) ->
+    FSPMySQL mockReq, transport, (err, results) ->
       err.message.should.eql "COUNT ERROR"
       done()

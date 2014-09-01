@@ -16,7 +16,10 @@ var FSPField          = require(__dirname + '/lib/field'),
 // @return {FSPMiddleware}
 function FSPFactory(repository, fields, options) {
   this.repository   = repository;
-  this.fields       = FSPField.getManyFromArray(fields);
+
+  if (typeof fields !== 'undefined') {
+    this.fields       = FSPField.getManyFromArray(fields);
+  }
 
   options           = options || {};
   options.driver    = options.driver || 'mysql';
@@ -37,7 +40,7 @@ function FSPMiddleware(req, res, next) {
 
   transport         = FSPRequest(req, transport);
 
-  this.driver(req.mysql, transport, function (err, response) {
+  this.driver(req, transport, function (err, response) {
     if (err) return next(err);
 
     return res.json(response);
