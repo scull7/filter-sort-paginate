@@ -63,6 +63,9 @@ describe 'FSPMySQLQueryTranslator', ->
       translator.fields('ALL').should.equal 'SELECT *'
       translator.fields('all').should.equal 'SELECT *'
 
+    it 'should return "SELECT *" if an empty fields array is passed in', ->
+      translator.fields([]).should.equal "SELECT *"
+
     it 'should parse and sanitize all fields in the given array', ->
       fields  = [
         new FSPField 'foo', 'bar'
