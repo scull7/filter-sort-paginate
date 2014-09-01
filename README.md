@@ -74,7 +74,7 @@ The following response will be generated
     { column: 'test', action: 'is', value: 'something' },
     { column: 'this', action: 'gt', value: 'that' }
   ],
-  limit: 100, // 100 is the default limit
-  page: 1, // page is one based
+  limit: 25, // 100 is the default limit
+  page: 2, // page is one based
 }
 ```
