@@ -83,3 +83,5 @@ To Do
 -----
 
 * Fix exceptions in MySQL driver not being caught.
+* Add concept of defaults to the options array.  
+  These will be default filters, sorts, etc...
