@@ -31,7 +31,7 @@ The response will be an object that has the following structure:
 
 ```javascript
 {
-  items: [ { name: 'value }, ... ],
+  items: [ { name: 'value' }, ... ],
   total: 10, // total number of items produced by the query.
   field_data: [ { /* column data from mysql */ ... ],
   repository: 'table_name', // name of the current table.
