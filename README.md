@@ -80,3 +80,8 @@ The following response will be generated
   page: 2, // page is one based
 }
 ```
+
+To Do
+-----
+
+* Fix exceptions in MySQL driver not being caught.
