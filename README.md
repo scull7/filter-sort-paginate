@@ -26,3 +26,55 @@ app.use(function (req, res, next) {
 app.get('/', fsp('table_name'))
 
 ```
+
+The response will be an object that has the following structure:
+
+```javascript
+{
+  items: [ { name: 'value }, ... ],
+  total: 10, // total number of items produced by the query.
+  field_data: [ { /* column data from mysql */ ... ],
+  repository: 'table_name', // name of the current table.
+  fields: [ /* any currently specified fields */ ],
+  sorts: [ /* any currently specified sort fields */ ],
+  filters: [ /* any currently specified filters */ ],
+  limit: 100, // 100 is the default limit
+  page: 1, // page is one based
+}
+```
+
+Given the following request URL
+
+`/?filter=test:is:something|this:gt:that&sort=+test|-that&page=2&limit=25`
+
+With the following set up.
+
+```javascript
+  app.get('/', fsp('table_name', [ 'test', { column: 'this', alias: 'me' }, 'that' ]));
+```
+
+The following response will be generated
+
+```javascript
+{
+  items: [ { test: 'something', this: 'then', that: 'this' }, ... ],
+  total: 10, // total number of items produced by the query.
+  field_data: [ { /* column data from mysql */ ...} ],
+  repository: 'table_name', // name of the current table.
+  fields: [
+    { column: 'test', alias: null },
+    { column: 'this', alias: 'me' },
+    { column: 'that', alias: null }
+  ],
+  sorts: [
+    { column: 'test', direction: '+' },
+    { column: 'that', direction: '-' }
+  ],
+  filters: [
+    { column: 'test', action: 'is', value: 'something' },
+    { column: 'this', action: 'gt', value: 'that' }
+  ],
+  limit: 100, // 100 is the default limit
+  page: 1, // page is one based
+}
+```
