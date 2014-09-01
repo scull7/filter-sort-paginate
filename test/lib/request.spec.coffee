@@ -28,7 +28,7 @@ describe 'FSPRequest', ->
       limit: 1000
 
     test  = FSPRequest(mockReq, transport)
-    test.page.should.equal 0
+    test.page.should.equal 1
     test.limit.should.equal 100
 
   it 'should set the page and limit to the provided values', ->
