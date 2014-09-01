@@ -7,3 +7,22 @@ filter-sort-paginate
 
 This is a simple filter sort paginate module designed to work 
 with expressJS like frameworks.
+
+usage
+-----
+
+```javascript
+
+var fsp     = require('filter-sort-paginate'),
+    express = require('express'),
+    mysql   = require('mysql'),
+    app     = express()
+;
+
+app.use(function (req, res, next) {
+  req.mysql = ... //get mysql connection
+});
+
+app.get('/', fsp('table_name'))
+
+```
