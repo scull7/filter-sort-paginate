@@ -155,6 +155,27 @@ describe 'FSPMySQLQueryTranslator', ->
 
       translator.filters(filters).should.equal expected
 
+    it 'should render LIKE filters appropriately', ->
+      query     = "test:like:something"
+      filters   = FSPParser.filterQuery(query)
+      expected  = " WHERE `test` LIKE '%something%'"
+
+      translator.filters(filters).should.equal expected
+
+    it 'should render STARTS filters appropriately', ->
+      query     = "test:starts:something"
+      filters   = FSPParser.filterQuery(query)
+      expected  = " WHERE `test` LIKE 'something%'"
+
+      translator.filters(filters).should.equal expected
+
+    it 'should render ENDS filters appropriately', ->
+      query     = "test:ends:something"
+      filters   = FSPParser.filterQuery(query)
+      expected  = " WHERE `test` LIKE '%something'"
+
+      translator.filters(filters).should.equal expected
+
   describe 'sorts()', ->
 
     it 'should be a function with an arity of 1', ->
