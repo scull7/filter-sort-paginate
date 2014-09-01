@@ -19,6 +19,8 @@ function FSPFactory(repository, fields, options) {
 
   if (typeof fields !== 'undefined') {
     this.fields       = FSPField.getManyFromArray(fields);
+  } else {
+    this.fields       = "*";
   }
 
   options           = options || {};
