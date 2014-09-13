@@ -45,7 +45,7 @@ describe 'FSPMySQL', ->
         cb null, [{ test: 'something' }], [{ name: 'test' }]
 
       else if /SELECT COUNT/.test(sql)
-        throw Error("COUNT ERROR");
+        throw Error("COUNT ERROR")
 
       else
         throw Error("Bad SQL: #{sql}")
