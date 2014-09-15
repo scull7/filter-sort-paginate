@@ -27,3 +27,4 @@ node_modules
 # IDE Files
 .idea
 atlassian-ide-plugin.xml
+*.swp
